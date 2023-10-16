@@ -18,7 +18,7 @@ const DUMMY_MEETUPS = [
   },
 ];
 
-function HomePage() {
+function HomePage1(props) {
   //at first time this component is rendered, loadedMeetup will be an ampty array
   const [loadedMeetups, setLoadedMeetups] = useState([]);
 
@@ -31,6 +31,23 @@ function HomePage() {
     setLoadedMeetups(DUMMY_MEETUPS);
   }, []);
   return <MeetupList meetups={loadedMeetups} />;
+}
+
+function HomePage(props) {
+  return <MeetupList meetups={props.meetups} />;
+}
+
+//getStaticProps is executed before component function
+//getStaticProps must be in page component (under /pages)
+//its job is to prepare 'props' for this page
+//code in this function is not seen in client side
+export async function getStaticProps() {
+  //fetch data from an api or database
+  return {
+    props: {
+      meetups: DUMMY_MEETUPS,
+    },
+  };
 }
 
 export default HomePage;
