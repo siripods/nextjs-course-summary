@@ -43,11 +43,35 @@ function HomePage(props) {
 //code in this function is not seen in client side
 export async function getStaticProps() {
   //fetch data from an api or database
+
+  //
+
   return {
     props: {
       meetups: DUMMY_MEETUPS,
     },
+    revalidate: 10, //after 10 seconds, if there is new request, then regenerate this page
   };
 }
+
+//this function will not run during build process
+//instead run after deployment for every incoming request
+//use getServerSideProps() if you need to access concrete request and response object
+//or if you really have data that change multiple times every second
+// export async function getServerSideProps(context) {
+  
+//   const req = context.req;
+//   const res = context.res;
+
+//   //fetch data from an api or database
+
+//   //
+
+//   return {
+//     props: {
+//       meetups: DUMMY_MEETUPS,
+//     },
+//   };
+// }
 
 export default HomePage;
