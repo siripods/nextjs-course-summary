@@ -1,22 +1,6 @@
 import { useEffect, useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
-
-const DUMMY_MEETUPS = [
-  {
-    id: "m1",
-    title: "A first meetup",
-    image: "first-meetup.jpg",
-    address: "Some address 5, 12345, Some City",
-    description: "This is a first meetup",
-  },
-  {
-    id: "m2",
-    title: "A second meetup",
-    image: "second-meetup.jpg",
-    address: "Some address 10, 12345, Some City",
-    description: "This is second first meetup",
-  },
-];
+import { DUMMY_MEETUPS } from "../api/dummy-data";
 
 function HomePage1(props) {
   //at first time this component is rendered, loadedMeetup will be an ampty array
