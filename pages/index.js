@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
-import { DUMMY_MEETUPS } from "../api/dummy-data";
+import { DUMMY_MEETUPS } from "../data/dummy-data";
 
 function HomePage1(props) {
   //at first time this component is rendered, loadedMeetup will be an ampty array

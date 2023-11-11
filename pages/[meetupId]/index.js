@@ -1,5 +1,5 @@
 import MeetupDetail from "../../components/meetups/MeetupDetail";
-import { DUMMY_MEETUPS } from "../../api/dummy-data";
+import { DUMMY_MEETUPS } from "../../data/dummy-data";
 import { useEffect } from "react";
 
 function MeetupDetails(props) {
