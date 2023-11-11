@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import Head from "next/head";
+import { Fragment, useEffect, useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
 import { DUMMY_MEETUPS } from "../data/dummy-data";
 import { MongoClient } from "mongodb";
@@ -15,11 +16,27 @@ function HomePage1(props) {
     //and then this component will execute again, which will rerender the list with actual data
     setLoadedMeetups(props.meetups);
   }, []);
-  return <MeetupList meetups={loadedMeetups} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>React Meetups</title>
+        <meta name="description" content="Browse a huge list of highly active React meetups!" />
+      </Head>
+      <MeetupList meetups={loadedMeetups} />
+    </Fragment>
+  );
 }
 
 function HomePage(props) {
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>React Meetups</title>
+        <meta name="description" content="Browse a huge list of highly active React meetups!" />
+      </Head>
+      <MeetupList meetups={props.meetups} />
+    </Fragment>
+  );
 }
 
 //getStaticProps is executed before component function
@@ -35,7 +52,7 @@ export async function getStaticProps() {
   const meetupCollections = db.collection("meetups");
   const meetups = await meetupCollections.find().toArray();
   client.close();
-console.log(meetups);
+  console.log(meetups);
   //
 
   return {
