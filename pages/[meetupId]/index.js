@@ -48,12 +48,14 @@ export async function getStaticPaths() {
   return {
     //fallback tells that "paths" has all possible values or some of them only
     //fallsbck = false, means we provide all possible values of "paths" (meetupId in this case)
-    //fallback = true, means if a path does not exist (meetupId not exist in "paths"), nextjs will try to generate page for this meetupId on the server
-    fallback: true,
+    //fallback = true or "blocking", means if a path does not exist (meetupId not exist in "paths"), nextjs will try to generate page for this meetupId on the server
+    fallback: "blocking",
+    // generate all possible paths with meetup.id from database  
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
     })),
 
+    //sample harcode staic paths
     //our data has 3 records, but we try giving only 2 meetupIds (m1 and m2)
     /*paths: [
       {
