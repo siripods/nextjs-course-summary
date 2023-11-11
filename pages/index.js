@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
 import { DUMMY_MEETUPS } from "../data/dummy-data";
+import { MongoClient } from "mongodb";
 
 function HomePage1(props) {
   //at first time this component is rendered, loadedMeetup will be an ampty array
@@ -12,7 +13,7 @@ function HomePage1(props) {
 
     //set meetups we get from server, so the state is updated
     //and then this component will execute again, which will rerender the list with actual data
-    setLoadedMeetups(DUMMY_MEETUPS);
+    setLoadedMeetups(props.meetups);
   }, []);
   return <MeetupList meetups={loadedMeetups} />;
 }
@@ -27,12 +28,24 @@ function HomePage(props) {
 //code in this function is not seen in client side
 export async function getStaticProps() {
   //fetch data from an api or database
-
+  const client = await MongoClient.connect(
+    "mongodb+srv://siripods:mongo1siri@cluster0.thb1hcq.mongodb.net/?retryWrites=true&w=majority"
+  );
+  const db = client.db("meetups");
+  const meetupCollections = db.collection("meetups");
+  const meetups = await meetupCollections.find().toArray();
+  client.close();
+console.log(meetups);
   //
 
   return {
     props: {
-      meetups: DUMMY_MEETUPS,
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        address: meetup.address,
+        image: meetup.image,
+        id: meetup._id.toString(),
+      })),
     },
     revalidate: 10, //after 10 seconds, if there is new request, then regenerate this page
   };
@@ -43,7 +56,7 @@ export async function getStaticProps() {
 //use getServerSideProps() if you need to access concrete request and response object
 //or if you really have data that change multiple times every second
 // export async function getServerSideProps(context) {
-  
+
 //   const req = context.req;
 //   const res = context.res;
 
